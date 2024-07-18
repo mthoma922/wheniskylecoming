@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TIME UNTIL KYLE ARRIVES</title>
+    <style>
+        body {
+            background-image: url('Capture.png');
+            background-repeat: repeat;
+            background-size: contain;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+        .flying-title {
+            font-size: 2em;
+            position: absolute;
+            color: white;
+            animation: sparkle 1s infinite, move 5s infinite;
+        }
+        @keyframes sparkle {
+            0% { color: white; }
+            50% { color: yellow; }
+            100% { color: white; }
+        }
+        @keyframes move {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(100px, 200px); }
+            50% { transform: translate(-100px, -200px); }
+            75% { transform: translate(-200px, 100px); }
+            100% { transform: translate(0, 0); }
+        }
+        #timer-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #timer-box {
+            font-size: 3em;
+            padding: 20px;
+            border: 5px solid white;
+            animation: flash 1s infinite;
+        }
+        @keyframes flash {
+            0% { background-color: red; border-color: blue; }
+            25% { background-color: green; border-color: yellow; }
+            50% { background-color: blue; border-color: red; }
+            75% { background-color: yellow; border-color: green; }
+            100% { background-color: red; border-color: blue; }
+        }
+    </style>
+    <script>
+        function countdown() {
+            const eventDate = new Date("July 19, 2024 11:15:00 EST").getTime();
+            const now = new Date().getTime();
+            const timeRemaining = eventDate - now;
+
+            const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+            document.getElementById("timer").innerHTML =
+                days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+            if (timeRemaining < 0) {
+                clearInterval(x);
+                document.getElementById("timer").innerHTML = "EXPIRED";
+            }
+        }
+
+        function createFlyingTitles() {
+            for (let i = 0; i < 10; i++) {
+                const title = document.createElement('div');
+                title.className = 'flying-title';
+                title.innerText = 'TIME UNTIL KYLE ARRIVES';
+                title.style.top = Math.random() * window.innerHeight + 'px';
+                title.style.left = Math.random() * window.innerWidth + 'px';
+                document.body.appendChild(title);
+            }
+        }
+
+        setInterval(countdown, 1000);
+        window.onload = function() {
+            countdown();
+            createFlyingTitles();
+        }
+    </script>
+</head>
+<body>
+    <div id="timer-container">
+        <div id="timer-box">
+            <div id="timer"></div>
+        </div>
+    </div>
+</body>
+</html>
